@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="programacionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="typeOfUser">
+          <Key>
+            <PropertyRef Name="IdTypeOfUser" />
+          </Key>
+          <Property Name="IdTypeOfUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeOfUserName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreUsuario" Type="varchar" MaxLength="50" />
+          <Property Name="Apellido" Type="varchar" MaxLength="50" />
+          <Property Name="Edad" Type="int" />
+          <Property Name="Pass" Type="varchar" MaxLength="50" />
+          <Property Name="FK_IdTypeOfUser" Type="int" />
+        </EntityType>
+        <Association Name="FK__UserList__FK_IdT__4BAC3F29">
+          <End Role="typeOfUser" Type="Self.typeOfUser" Multiplicity="0..1" />
+          <End Role="UserList" Type="Self.UserList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="typeOfUser">
+              <PropertyRef Name="IdTypeOfUser" />
+            </Principal>
+            <Dependent Role="UserList">
+              <PropertyRef Name="FK_IdTypeOfUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="programacionModelStoreContainer">
+          <EntitySet Name="typeOfUser" EntityType="Self.typeOfUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserList" EntityType="Self.UserList" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__UserList__FK_IdT__4BAC3F29" Association="Self.FK__UserList__FK_IdT__4BAC3F29">
+            <End Role="typeOfUser" EntitySet="typeOfUser" />
+            <End Role="UserList" EntitySet="UserList" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="programacionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="UserList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Edad" Type="Int32" />
+          <Property Name="Pass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FK_IdTypeOfUser" Type="Int32" />
+          <NavigationProperty Name="typeOfUser" Relationship="programacionModel.FK__UserList__FK_IdT__4BAC3F29" FromRole="UserList" ToRole="typeOfUser" />
+        </EntityType>
+        <EntityContainer Name="programacionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UserLists" EntityType="Self.UserList" />
+          <EntitySet Name="typeOfUsers" EntityType="programacionModel.typeOfUser" />
+          <AssociationSet Name="FK__UserList__FK_IdT__4BAC3F29" Association="programacionModel.FK__UserList__FK_IdT__4BAC3F29">
+            <End Role="typeOfUser" EntitySet="typeOfUsers" />
+            <End Role="UserList" EntitySet="UserLists" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="typeOfUser">
+          <Key>
+            <PropertyRef Name="IdTypeOfUser" />
+          </Key>
+          <Property Name="IdTypeOfUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeOfUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserLists" Relationship="programacionModel.FK__UserList__FK_IdT__4BAC3F29" FromRole="typeOfUser" ToRole="UserList" />
+        </EntityType>
+        <Association Name="FK__UserList__FK_IdT__4BAC3F29">
+          <End Type="programacionModel.typeOfUser" Role="typeOfUser" Multiplicity="0..1" />
+          <End Type="programacionModel.UserList" Role="UserList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="typeOfUser">
+              <PropertyRef Name="IdTypeOfUser" />
+            </Principal>
+            <Dependent Role="UserList">
+              <PropertyRef Name="FK_IdTypeOfUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="programacionModelStoreContainer" CdmEntityContainer="programacionEntities">
+          <EntitySetMapping Name="UserLists">
+            <EntityTypeMapping TypeName="programacionModel.UserList">
+              <MappingFragment StoreEntitySet="UserList">
+                <ScalarProperty Name="FK_IdTypeOfUser" ColumnName="FK_IdTypeOfUser" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="typeOfUsers">
+            <EntityTypeMapping TypeName="programacionModel.typeOfUser">
+              <MappingFragment StoreEntitySet="typeOfUser">
+                <ScalarProperty Name="TypeOfUserName" ColumnName="TypeOfUserName" />
+                <ScalarProperty Name="IdTypeOfUser" ColumnName="IdTypeOfUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
